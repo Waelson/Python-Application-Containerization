@@ -25,7 +25,7 @@ pipeline {
         stage('Lint'){
             steps{
                 sh "echo Lint Dockerfile"
-                sh "${hadolintExec}"
+                sh "${hadolintExec} Dockerfile"
             }
         }
         
