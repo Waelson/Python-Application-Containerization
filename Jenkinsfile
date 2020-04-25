@@ -11,6 +11,7 @@ pipeline {
         def dockerHome = "/usr" //tool name: 'dockerTool', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
         def dockerExec = "${dockerHome}/bin/docker"  
         def awsExec = "/usr/local/bin/aws"
+        def hadolintExec = "/bin/hadolint"
     }
     
     stages {
@@ -18,6 +19,13 @@ pipeline {
             steps{
                 sh "echo Realizando checkout"
                 git credentialsId: 'git-credential', url: 'https://github.com/Waelson/Python-Application-Containerization'
+            }
+        }
+        
+        stage('Lint'){
+            steps{
+                sh "Lint Dockerfile"
+                sh "${hadolintExec}"
             }
         }
         
