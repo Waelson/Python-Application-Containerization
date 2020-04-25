@@ -25,7 +25,7 @@ pipeline {
         stage('Lint'){
             steps{
                 sh "echo Lint Dockerfile"
-                sh "${hadolintExec} ignore=DL3013 Dockerfile"
+                sh "${hadolintExec} Dockerfile ignore=DL3013"
             }
         }
         
