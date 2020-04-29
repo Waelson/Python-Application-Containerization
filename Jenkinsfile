@@ -47,7 +47,7 @@ pipeline {
                 }
             }
         }
-        
+        /*
         stage('Push Image to ECS'){
             steps{
                 sh "echo Realizando login no ECR"
@@ -57,6 +57,7 @@ pipeline {
                 sh "${dockerExec} push xxxxxxxxx.dkr.ecr.us-west-2.amazonaws.com/app-python-demo:${params.strVersao}"                
             }
         }
+        */
     }    
     
     /*
