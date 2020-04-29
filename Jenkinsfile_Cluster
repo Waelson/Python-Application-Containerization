@@ -1,1 +1,34 @@
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'strClusterName',
+            defaultValue: 'cluster-project-capstone',
+            description: 'Cluster name')
+            
 
+        string(name: 'strRegion',
+            defaultValue: 'us-west-2',
+            description: 'AWS Region')            
+    }    
+    
+    environment{
+        def dockerHome = "/usr" //tool name: 'dockerTool', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        def dockerExec = "${dockerHome}/bin/docker"  
+        def eksctlExec = "/usr/local/bin/eksctl"
+        def awsExec = "/usr/local/bin/aws"        
+        def hadolintExec = "/bin/hadolint"
+    }
+    
+    stages {
+        stage('SCM Checkout'){
+            steps{
+                git credentialsId: 'git-credential', url: 'https://github.com/Waelson/Python-Application-Containerization'
+            }
+        }
+        
+        stage('Creating Cluster'){
+          sh "${eksctlExec} create cluster --name ${params.strClusterName} --region ${params.strRegion} --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 4 --managed"
+        }
+    }
+}
