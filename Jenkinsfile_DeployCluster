@@ -17,12 +17,6 @@ pipeline {
     }
     
     stages {
-        stage('SCM Checkout'){
-            steps{
-                git credentialsId: 'git-credential', url: 'https://github.com/Waelson/Python-Application-Containerization'
-            }
-        }
-        
         stage('Deploy Cluster'){
             steps{
                 sh "${eksctlExec} create cluster --name ${params.strClusterName} --region ${params.strRegion} --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 4 --managed"
